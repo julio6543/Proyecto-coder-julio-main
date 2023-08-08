@@ -1,0 +1,30 @@
+    [
+    {
+        "id": 1,
+        "name": "julio gonzalo sanchez",
+        "email": "juliogonzalosanchez21@gmail.com",
+        "age": 25,
+        "games": ["Genshin Impact", "Rocket Ligue", "God of War"]
+    },
+    {
+        "id": 2,
+        "name": "gonzalo sanchez",
+        "email": "gonzalosanchez94@live.com",
+        "age": 30,
+        "games": []
+    },
+    {
+        "id": 3,
+        "name": "Paula sanchez",
+        "email": "Paulasanchez39@live.com",
+        "age": 25,
+        "games": ["Genshin Impact", "Rocket Ligue", "God of War"]
+    },
+    {
+        "id": 4,
+        "name": "Florencia Subidia",
+        "email": "florenciasub@gmail.com",
+        "age": 30,
+        "games": []
+    }
+    ]

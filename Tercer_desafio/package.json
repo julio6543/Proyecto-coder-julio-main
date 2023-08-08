@@ -1,0 +1,25 @@
+{
+  "name": "desafio-julio-sanchez",
+  "version": "1.0.0",
+  "description": "´Proyecto de Consola de Videojuegos'\r Este proyecto es una aplicación de consola de videojuegos que te permite administrar y explorar una variedad de productos relacionados con videojuegos. Puedes agregar nuevos productos, incluyendo consolas y juegos, así como obtener información detallada sobre cada producto.",
+  "type": "module",
+  "main": "productManager.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/julio6543/Desafio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/julio6543/Desafio-Backend-Sanchez-Julio/issues"
+  },
+  "homepage": "https://github.com/julio6543/Desafio-Backend-Sanchez-Julio#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "git": "^0.1.5"
+  }
+}
