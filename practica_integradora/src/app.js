@@ -30,7 +30,7 @@ app.use("/api/products/", productsRouter);
 app.use("/api/carts/", cartsRouter);
 app.use("/", viewsRouter);
 
-mongoose.connect("mongodb+srv://CoderJavier:Javier123!@codercluster.rnwzt3p.mongodb.net/ecommerce?retryWrites=true&w=majority");
+mongoose.connect("");
 
 socketServer.on("connection", (socket) => {
     console.log("Nueva Conexión!");
