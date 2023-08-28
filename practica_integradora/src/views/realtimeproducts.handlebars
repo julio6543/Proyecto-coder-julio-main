@@ -1,23 +1,22 @@
-    <form id="formProduct">
+<form id="formProduct">
     <h2>Agregar Producto</h2>
     <input class="controls" type="text" name="title" id="title" placeholder="Ingrese Nombre del Producto" required>
-    <input class="controls" type="text" name="description" id="description" placeholder="Ingrese description" required>
+    <input class="controls" type="text" name="description" id="description" placeholder="Ingrese descripción" required>
     <input class="controls" type="number" name="stock" id="stock" placeholder="Ingrese su stock" required>
-    <input class="controls" type="text" name="thumbnail" id="thumbnail" placeholder="Ingrese su imagen url" required>
-    <input class="controls" type="text" name="category" id="category" placeholder="Ingrese categoria" required>
+    <input class="controls" type="text" name="thumbnail" id="thumbnail" placeholder="Ingrese la URL de la imagen" required>
+    <input class="controls" type="text" name="category" id="category" placeholder="Ingrese categoría" required>
     <input class="controls" type="number" name="price" id="price" placeholder="Ingrese su precio" required>
-    <input class="controls" type="text" name="code" id="code" placeholder="Ingrese su code" required>
-    <button class="botons" type="submit" id="add-btn">Registrar </button>
-    <h2> Eliminar Producto:</h2>
+    <input class="controls" type="text" name="code" id="code" placeholder="Ingrese su código" required>
+    <button class="botons" type="submit" id="add-btn">Registrar</button>
+    <h2>Eliminar Producto:</h2>
     <input class="controls" type="number" name="id-prod" id="id-prod" placeholder="Ingrese ID">
     <button class="botons" type="button" id="delete-btn">Eliminar</button>
-    <button class="botons" type="button" id="delete-btn">Modificar</button>
-    </form>
+    <button class="botons" type="button" id="modify-btn">Modificar</button>
+</form>
 
-    <article id="list-products">
+<article id="list-products">
 
-    </article>
+</article>
 
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/main.realTimeProducts.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./realtimeproducts.handlebars"></script>

@@ -1,93 +1,92 @@
-    import fs from "fs"
+import fs from "fs";
 
-    export default class ProductManager{
-        constructor(path){
-            this.path=path,
-        this.products=[  
-        ]
-        }
-
-        getProducts=async()=>{
-        const productlist= await fs.promises.readFile(this.path,"utf-8")
-        const productlistparse=JSON.parse(productlist)
-        return productlistparse
-        }
-
-        generateId=async()=>{
-            const counter=this.products.length
-            if(counter==0){
-                return 1
-            }
-            else{
-                return (this.products[counter-1].id)+1
-            }
-        }
-
-        addProduct=async(title,description,price,thumbnail,code,stock)=>{
-        if(!title || !description || !price || !thumbnail|| !code||!stock){
-            console.error("INGRESE TODOS LOS DATOS DEL PRODUCTO")
-            return 
-        }
-        else{
-            const codigorepetido=this.products.find(elemento=>elemento.code===code)
-            if(codigorepetido){
-                console.error("EL CODIGO DEL PRODUCTO QUE DESEA AGREGAR ES REPETIDO")
-                return
-            }
-            else{
-                const id=await this.generateId()
-                const productnew={
-                    id,title,description,price,thumbnail,code,stock
-                }
-                this.products.push(productnew)
-                await fs.promises.writeFile(this.path,JSON.stringify(this.products,null,2))
-            }
-        }
-        }
-
-        updateProduct=async(id,title,description,price,thumbnail,code,stock)=>{
-            if(!id|| !title || !description || !price || !thumbnail|| !code||!stock){
-            console.error("INGRESE TODOS LOS DATOS DEL PRODUCTO PARA SU ACTUALIZACION")
-            return 
-            }
-            else{
-                const allproducts=await this.getProducts()
-                const codigorepetido=allproducts.find(elemento=>elemento.code===code)
-                if(codigorepetido){
-                    console.error("EL CODIGO DEL PRODUCTO QUE DESEA ACTUALIZAR ES REPETIDO")
-                    return
-                }
-                else{
-                    const currentProductsList=await this.getProducts()
-                    const newProductsList=currentProductsList.map(elemento=>{
-                        if(elemento.id===id){
-                        const updatedProduct={
-                            ...elemento,
-                            title,description,price,thumbnail,code,stock
-                        }
-                        return updatedProduct
-                        }
-                        else{
-                            return elemento
-                        }
-                    })
-                    await fs.promises.writeFile(this.path,JSON.stringify(newProductsList,null,2))
-                }
-                
-            }
-        }
-
-        deleteProduct=async(id)=>{
-            const allproducts=await this.getProducts()
-            const productswithoutfound=allproducts.filter(elemento=>elemento.id!==id)
-        await fs.promises.writeFile(this.path,JSON.stringify(productswithoutfound,null,2))
-        }
-        getProductbyId=async(id)=>{
-            const allproducts=await this.getProducts()
-        const found=allproducts.find(element=>element.id===id)
-        return found
-        }
-
-
+class ProductManager {
+    constructor() {
+        this.products = [];
+        this.path = "Products.json";
+        this.createFile();
     }
 
+    createFile() {
+        if (!fs.existsSync(this.path)) {
+            fs.writeFileSync(this.path, JSON.stringify(this.products));
+        }
+    }
+
+    addProduct(product) {
+        if (this.validateCode(product.code)) {
+            console.log("Error! Code exists!");
+            return false;
+        } else {
+            const newProduct = { id: this.generateId(), ...product };
+            this.products = this.getProducts();
+            this.products.push(newProduct);
+            this.saveProducts();
+            console.log("Product added!");
+            return true;
+        }
+    }
+
+    updateProduct(id, product) {
+        this.products = this.getProducts();
+        const pos = this.products.findIndex(item => item.id === id);
+
+        if (pos > -1) {
+            this.products[pos] = { ...this.products[pos], ...product };
+            this.saveProducts();
+            console.log("Product updated!");
+            return true;
+        } else {
+            console.log("Not found!");
+            return false;
+        }
+    }
+
+    deleteProduct(id) {
+        this.products = this.getProducts();
+        const pos = this.products.findIndex(item => item.id === id);
+
+        if (pos > -1) {
+            this.products.splice(pos, 1);
+            this.saveProducts();
+            console.log("Product #" + id + " deleted!");
+            return true;
+        } else {
+            console.log("Not found!");
+            return false;
+        }
+    }
+
+    getProducts() {
+        const products = JSON.parse(fs.readFileSync(this.path, "utf-8"));
+        return products;
+    }
+
+    getProductById(id) {
+        this.products = JSON.parse(fs.readFileSync(this.path, "utf-8"));
+        return this.products.find(item => item.id === id) || "Not found";
+    }
+
+    validateCode(code) {
+        return this.products.some(item => item.code === code);
+    }
+
+    generateId() {
+        let max = 0;
+        const products = this.getProducts();
+
+        products.forEach(item => {
+            if (item.id > max) {
+                max = item.id;
+            }
+        });
+
+        return max + 1;
+    }
+
+    saveProducts() {
+        fs.writeFileSync(this.path, JSON.stringify(this.products));
+    }
+}
+
+export default ProductManager;

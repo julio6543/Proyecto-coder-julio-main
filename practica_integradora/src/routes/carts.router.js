@@ -2,38 +2,38 @@ import { Router } from "express";
 import CartManager from "../dao/CartManager.js";
 
 const cartsRouter = Router();
-const CM = new CartManager();
+const cartManager = new CartManager();
 
 cartsRouter.post("/", async (req, res) => {
-    const newCart = await CM.newCart();
+    const newCartCreated = await cartManager.createCart();
 
-    if (newCart) {
-        res.send({status:"ok", message:"El Carrito se creó correctamente!"});
+    if (newCartCreated) {
+        res.send({ status: "success", message: "The cart was created successfully!" });
     } else {
-        res.status(500).send({status:"error", message:"Error! No se pudo crear el Carrito!"});
+        res.status(500).send({ status: "error", message: "Error! Could not create the cart!" });
     }
 });
 
-cartsRouter.get("/:cid", async (req, res) => {
-    const cid = req.params.cid;
-    const cart = await CM.getCart(cid);
+cartsRouter.get("/:cartId", async (req, res) => {
+    const cartId = req.params.cartId;
+    const cart = await cartManager.getCart(cartId);
 
     if (cart) {
-        res.send({products:cart.products});
+        res.send({ products: cart.products });
     } else {
-        res.status(400).send({status:"error", message:"Error! No se encuentra el ID de Carrito!"});
+        res.status(400).send({ status: "error", message: "Error! Cart ID not found!" });
     }
 });
 
-cartsRouter.post("/:cid/products/:pid", async (req, res) => {
-    const cid = req.params.cid;
-    const pid = req.params.pid;
-    const result = await CM.addProductToCart(cid, pid);
+cartsRouter.post("/:cartId/products/:productId", async (req, res) => {
+    const cartId = req.params.cartId;
+    const productId = req.params.productId;
+    const productAdded = await cartManager.addProductToCart(cartId, productId);
 
-    if (result) {
-        res.send({status:"ok", message:"El producto se agregó correctamente!"});
+    if (productAdded) {
+        res.send({ status: "success", message: "The product was added to the cart successfully!" });
     } else {
-        res.status(400).send({status:"error", message:"Error! No se pudo agregar el Producto al Carrito!"});
+        res.status(400).send({ status: "error", message: "Error! Could not add the product to the cart!" });
     }
 });
 

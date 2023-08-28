@@ -1,25 +1,20 @@
-    {{#each listproducts}}
-    <article class="container">
-    <div class="card">
-        <div class="imgBx">
-        <img src="{{thumbnail}}" width="150" />
-        </div>
-        <div class="contentBx">
-        <h2>{{title}}</h2>
-        <div class="size">
-            <h3>${{price}}</h3>
-        </div>
-        <div class="stocks">
-            <h3>Stock:{{stock}}</h3>
-        </div>
-        <a href="#">Buy Now</a>
+<div class="container">
+    <div class="row">
+        <h1 class="display-5 text-center mb-5">Chat con MongoDB</h1>
+        <div id="messages" class="col-md-4"></div>
+        <div class="col-md-4 offset-md-2">
+            <div class="mb-3">
+                <label for="username" class="form-label">Nombre de Usuario</label>
+                <input type="text" class="form-control" id="username">
+            </div>
+            <div class="mb-3">
+                <label for="usermessage" class="form-label">Mensaje</label>
+                <input type="text" class="form-control" id="usermessage">
+            </div>
+            <button type="button" class="btn btn-primary" id="btnSendMessage">Enviar Mensaje</button>    
         </div>
     </div>
+</div>
 
-    </article>
-    {{/each}}
-
-
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/index.js"></script>
+<script src="socket.io/socket.io.js"></script>
+<script src="js/chat.js"></script>

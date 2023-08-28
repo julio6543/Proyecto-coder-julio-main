@@ -32,22 +32,20 @@ app.use("/", viewsRouter);
 
 mongoose.connect("mongodb+srv://juliogonzalosanchez21:Tengohambre@cluster0.u63xyb3.mongodb.net/database?retryWrites=true&w=majority");
 
-socketServer.on("connection", (socket) => {
+socketServer.on("connection", async (socket) => {
     console.log("Nueva Conexión!");
 
-    const products = PM.getProducts();
+    const products = await PM.getProducts(); // Esperar a que se resuelva la promesa
     socket.emit("realTimeProducts", products);
 
     socket.on("nuevoProducto", (data) => {
         const product = {title:data.title, description:"", code:"", price:data.price, status:"", stock:10, category:"", thumbnails:data.thumbnails};
         PM.addProduct(product);
-        const products = PM.getProducts();
         socket.emit("realTimeProducts", products);
     });
 
     socket.on("eliminarProducto", (data) => {
         PM.deleteProduct(parseInt(data));
-        const products = PM.getProducts();
         socket.emit("realTimeProducts", products);
     });
 

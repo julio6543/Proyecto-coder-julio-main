@@ -2,11 +2,15 @@ import express from "express";
 import ProductManager from "../dao/ProductManager.js";
 
 const router = express.Router();
-const PM = new ProductManager();
+const productManager = new ProductManager();
 
 router.get("/", async (req, res) => {
-    const products = await PM.getProducts();
-    res.render("home", {products});
+    try {
+        const products = await productManager.getProducts();
+        res.render("home", { products });
+    } catch (error) {
+        res.status(500).send("An error occurred while fetching products.");
+    }
 });
 
 router.get("/realtimeproducts", (req, res) => {
@@ -16,6 +20,5 @@ router.get("/realtimeproducts", (req, res) => {
 router.get("/chat", (req, res) => {
     res.render("chat");
 });
-
 
 export default router;
