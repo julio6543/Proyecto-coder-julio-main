@@ -1,37 +1,40 @@
-    import {Router} from "express"
-    import CartManager from "../managers/cartManager.js"
-    import { __dirname } from "../utils.js"
-    const manager=new CartManager(__dirname+'/files/carts.json')
-    const router =Router()
+import { Router } from "express";
+import CartManager from "../dao/CartManager.js";
 
-    router.get("/carts",async(req,res)=>{
-    const carrito=await manager.getCarts()
-    res.json({carrito})
-    })
+const cartsRouter = Router();
+const CM = new CartManager();
 
-    router.get("/carts/:cid",async(req,res)=>{
-        const carritofound=await manager.getCartbyId(req.params)
-        res.json({status:"success",carritofound})
-    })
+cartsRouter.post("/", async (req, res) => {
+    const newCart = await CM.newCart();
 
+    if (newCart) {
+        res.send({status:"ok", message:"El Carrito se creó correctamente!"});
+    } else {
+        res.status(500).send({status:"error", message:"Error! No se pudo crear el Carrito!"});
+    }
+});
 
-    router.post("/carts/", async (req, res) => {
-        const newcart = await manager.addCart();
-        res.json({ status: "success", newcart });
-    });
+cartsRouter.get("/:cid", async (req, res) => {
+    const cid = req.params.cid;
+    const cart = await CM.getCart(cid);
 
-    router.post("/carts/:cid/products/:pid", async (req, res) => {
-        try {
-        const cid = parseInt(req.params.cid);
-        const pid = parseInt(req.params.pid);
-    
-        await manager.addProductToCart(cid, pid);
-        res.json({ status: "success", message: "Product added to cart successfully." });
-        } catch (error) {
-        console.error("Error adding product to cart:", error);
-        res.status(500).json({ status: "error", message: "Failed to add product to cart." });
-        }
-    });
-    
+    if (cart) {
+        res.send({products:cart.products});
+    } else {
+        res.status(400).send({status:"error", message:"Error! No se encuentra el ID de Carrito!"});
+    }
+});
 
-    export default router
+cartsRouter.post("/:cid/products/:pid", async (req, res) => {
+    const cid = req.params.cid;
+    const pid = req.params.pid;
+    const result = await CM.addProductToCart(cid, pid);
+
+    if (result) {
+        res.send({status:"ok", message:"El producto se agregó correctamente!"});
+    } else {
+        res.status(400).send({status:"error", message:"Error! No se pudo agregar el Producto al Carrito!"});
+    }
+});
+
+export default cartsRouter;

@@ -1,4 +1,4 @@
-import ProductManager from "./ProductManager.js";
+import ProductManager from "./dao/ProductManager.js";
 
 const PM = new ProductManager();
 console.log(PM.getProducts());
