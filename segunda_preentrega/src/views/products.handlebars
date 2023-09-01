@@ -1,0 +1,37 @@
+<div class="game-container">
+    <div class="row">
+        {{#each games}}
+            <div class="col-md-4">
+                <div class="game-card">
+                    <a href="/games/{{this.id}}" class="game-link">
+                        <img src="{{this.coverImage}}" class="img-fluid game-image" alt="{{this.title}}">
+                    </a>
+                    <div class="game-details">
+                        <p class="game-title">{{this.title}}<br><span class="game-price">${{this.price}}</span></p>
+                        <button class="add-to-cart-btn" onclick="addToCart('{{this.id}}')">Añadir al carrito (+)</button>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+    <div class="row my-5">
+        <div class="col">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    {{#if hasNextPage}}
+                        <li class="page-item">
+                            <a class="page-link" href="{{nextLink}}">Siguiente</a>
+                        </li>
+                    {{/if}}
+                    {{#if hasPrevPage}}
+                        <li class="page-item">
+                            <a class="page-link" href="{{prevLink}}">Anterior</a>
+                        </li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<script src="js/products.js"></script>
