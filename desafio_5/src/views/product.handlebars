@@ -1,0 +1,15 @@
+<div class="game-container">
+    <div class="game-details">
+        <div class="game-image">
+            <img src="{{game.coverImage}}" alt="{{game.title}}" class="img-fluid">
+        </div>
+        <div class="game-info">
+            <h1 class="game-title">{{game.title}}</h1>
+            <p class="game-price">${{game.price}}</p>
+            <p><button class="add-to-cart-btn" onclick="addToCart('{{game.id}}')">Añadir al carrito (+)</button></p>
+            <p class="game-description">{{game.description}}</p>
+        </div>
+    </div>
+</div>
+
+<script src="../js/products.js"></script>
