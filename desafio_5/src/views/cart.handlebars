@@ -2,19 +2,20 @@
     <div class="row">
         <div class="col-md-12">
             <table class="table">
-                {{#each products.payload}}
+                {{#each products}}
                     <tr>    
                         <td>
                             <a href="/products/{{this._id}}" class="text-decoration-none">
-                                <img src="{{this.thumbnails}}" class="img-fluid" alt="{{this.title}}">
+                                <img src="{{this.image}}" class="img-fluid" alt="{{this.title}}">
                             </a>
                         </td>
                         <td>{{this.title}}</td>
                         <td>${{this.price}}</td>
-                        <td><button class="btn btn-dark" onclick="eliminarProducto('{{this._id}}')">Eliminar (-)</button></td>
+                        <td><button class="btn btn-dark" onclick="agregarAlCarrito('{{this.title}}')">Agregar al carrito (+)</button></td>
                     </tr>
                 {{/each}}
             </table>
         </div>
     </div>
 </div>
+
