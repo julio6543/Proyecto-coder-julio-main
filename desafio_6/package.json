@@ -1,4 +1,15 @@
 {
+  "name": "desafio_6",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.5",
     "bcrypt": "^5.1.1",
