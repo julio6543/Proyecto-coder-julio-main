@@ -1,0 +1,23 @@
+[
+    {
+        "id": "1",
+        "title": "Rocket League",
+        "image": "https://i.scdn.co/image/ab67706c0000da84e204b6240dd475113fa235e0",
+        "description": "¡Experimenta la acción de fútbol de alta octanaje con Rocket League!",
+        "price": 0.00
+    },
+    {
+        "id": "2",
+        "title": "Genshin Impact",
+        "image": "https://lutear.com/wp-content/uploads/2020/09/genshin-impat-logo.jpg",
+        "description": "Embárcate en un viaje a través del mundo fantástico de Teyvat en Genshin Impact.",
+        "price": 0.00
+    },
+    {
+        "id": "3",
+        "title": "Fortnite",
+        "image": "https://assets-prd.ignimgs.com/2023/06/09/fortnitewilds-1686353306240.jpg?width=300&crop=1%3A1%2Csmart",
+        "description": "Únete al fenómeno battle royale y construye, lucha y sobrevive en Fortnite.",
+        "price": 0.00
+    }
+]

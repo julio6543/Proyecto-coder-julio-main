@@ -1,40 +1,52 @@
-const socket = io();
-const content = document.getElementById("content");
+    const socketClient = io();
 
-socket.on("realTimeProducts", (data) => {
-    let salida = ``;
+    // Espera a que se establezca la conexión antes de emitir eventos
+    socketClient.on("connect", () => {
+    console.log("Conexión con el servidor de sockets establecida.");
 
-    data.forEach(item => {
-        salida += `<div class="col-md-4">
-            <div class="card border-0 mb-3">
-                <img src="${item.thumbnails}" class="img-fluid" alt="${item.title}">
-                <div class="card-body text-center">
-                    <p class="card-text">${item.title}<br><span class="text-success">$${item.price}</span></p>
-                </div>
-            </div>
-        </div>`;
+    // Escucha el evento "productos" para actualizar la lista de productos
+    socketClient.on("productos", (products) => {
+        console.log(products);
+        updateProductList(products);
     });
 
-    content.innerHTML = salida;
-});
+    const form = document.getElementById("formProduct");
+    form.addEventListener("submit", (evt) => {
+        evt.preventDefault();
 
-const agregarProducto = () => {
-    const title = document.getElementById("title").value;
-    const thumbnails = document.getElementById("thumbnails").value;
-    const price = document.getElementById("price").value;
-    const product = {title:title, thumbnails:thumbnails, price:price};
+        const title = form.elements.title.value;
+        const description = form.elements.description.value;
+        const stock = form.elements.stock.value;
+        const thumbnail = form.elements.thumbnail.value;
+        const category = form.elements.category.value;
+        const price = form.elements.price.value;
+        const code = form.elements.code.value;
 
-    socket.emit("nuevoProducto", product);
-}
+        const product = {
+        title,
+        description,
+        stock,
+        thumbnail,
+        category,
+        price,
+        code,
+        };
 
-const btnAgregarProducto = document.getElementById("btnAgregarProducto");
-btnAgregarProducto.onclick = agregarProducto;
+        // Emitir el evento "nuevoProductos" al servidor
+        socketClient.emit("nuevoProducto", product);
 
-const eliminarProducto = () => {
-    const idProduct = document.getElementById("idProduct").value;
+        form.reset();
+    });
 
-    socket.emit("eliminarProducto", idProduct);
-}
+    document.getElementById("delete-btn").addEventListener("click", () => {
+        const deleteIdInput = document.getElementById("delete-id");
+        const product = deleteIdInput.value;
 
-const btnEliminarProducto = document.getElementById("btnEliminarProducto");
-btnEliminarProducto.onclick = eliminarProducto;
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar este producto?");
+
+        if (confirmDelete) {
+        socketClient.emit("deleteProduct", product);
+        deleteIdInput.value = "";
+        }
+    });
+    })

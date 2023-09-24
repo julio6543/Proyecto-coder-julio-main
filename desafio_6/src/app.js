@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 app.use(session({
     store:MongoStore.create({
-        mongoUrl: "mongodb+srv://juliogonzalosanchez21:<juliogonzalosanchez21>@cluster0.u63xyb3.mongodb.net",
+        mongoUrl: "mongodb+srv://juliogonzalosanchez21:d7wJqHR9DdrELCa9@cluster0.u63xyb3.mongodb.net/?retryWrites=true&w=majority",
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
         ttl: 10000
     }),
@@ -56,26 +56,25 @@ app.use("/api/carts/", cartsRouter);
 app.use("/api/sessions/", sessionsRouter);
 app.use("/", viewsRouter);
 
-mongoose.connect("mongodb+srv://juliogonzalosanchez21:<juliogonzalosanchez21>@cluster0.u63xyb3.mongodb.net/ecommerce?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://juliogonzalosanchez21:d7wJqHR9DdrELCa9@cluster0.u63xyb3.mongodb.net/?retryWrites=true&w=majority");
 
-socketServer.on("connection", (socket) => {
-    console.log("Nueva Conexión!");
+    socketServer.on("connection",async(socket)=>{
+        console.log("client connected con ID:",socket.id)
+        const products=await PM.getProducts()
+        socketServer.emit("realTimeProducts", products)
 
-    const products = PM.getProducts();
-    socket.emit("realTimeProducts", products);
+        socket.on("nuevoProducto",async(obj)=>{
+        await PM.addProduct(obj)
+        const products=await PM.getProducts();
+        socketServer.emit("realTimeProducts", products)
+        });
 
-    socket.on("nuevoProducto", (data) => {
-        const product = { title: data.title, description: "", code: "", price: data.price, status: "", stock: 10, category: "", thumbnails: data.thumbnails };
-        PM.addProduct(product);
-        const products = PM.getProducts();
-        socket.emit("realTimeProducts", products);
-    });
-
-    socket.on("eliminarProducto", (data) => {
-        PM.deleteProduct(parseInt(data));
-        const products = PM.getProducts();
-        socket.emit("realTimeProducts", products);
-    });
+        socket.on("deleteProduct",async(id)=>{
+            console.log(id)
+        await PM.deleteProduct(id)
+            const products=await PM.getProducts({})
+            socketServer.emit("realTimeProducts", products)
+            })
 
     socket.on("newMessage", async (data) => {
         CM.createMessage(data);
