@@ -1,66 +1,148 @@
-    <!doctype html>
-    <html lang="es">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{title}}</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class="container mb-5">
-            <div class="row">
-                <div class="col">
-                    <a href="/" title="Dix"><img src="https://www.sampleo.com/uploads/brands/50/logo/6482e9a4f055d.png" alt="Dix" width="120"></a>
-                </div>
-                <div class="mx-auto">
-            <form class="d-flex" method="GET">
-            <div class="input-group">
-                <input class="form-control me-2" type="text" placeholder="Buscar productos..." name="q" />
-                <button class="btn btn-outline-success" type="submit">Buscar</button>
-            </div>
-            </form>
-        </div>
-            <div class="col d-flex align-items-center justify-content-end">
-                <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/realtimeproducts">Productos en Tiempo Real</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DIX GAMER MEJOR 🎮 - Tu Mundo de Videojuegos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous" />
+  <style>
+    footer {
+      background-color: #343a40;
+      color: #ffffff;
+      padding: 20px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    footer p {
+      margin-bottom: 0;
+    }
+
+    .main-content {
+      min-height: calc(100vh - 74px);
+      padding-bottom: 60px;
+    }
+
+    .input-group {
+      width: 300px;
+    }
+
+    .input-group input[type="text"] {
+      border: none;
+      border-radius: 0;
+      padding: 10px;
+      box-shadow: none;
+    }
+
+    .input-group button[type="submit"] {
+      background-color: #28a745;
+      border: none;
+      border-radius: 0;
+      padding: 10px 20px;
+      color: #fff;
+    }
+
+    .input-group button[type="submit"]:hover {
+      background-color: #218838;
+      color: #fff;
+    }
+
+    /* Estilos adicionales para la temática de videojuegos */
+    body {
+      background-color: #1c1c1c;
+      color: #ffffff;
+      font-family: "Arial", sans-serif;
+    }
+
+    .navbar {
+      background-color: #333333;
+    }
+
+    .navbar-brand {
+      font-size: 28px;
+      font-weight: bold;
+      color: #ff6600;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar-brand::after {
+      content: "🎮"; /* Emoji de videojuegos */
+      margin-left: 10px;
+      font-size: 24px;
+    }
+
+    .navbar-dark .navbar-toggler-icon {
+      background-color: #ff6600;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+      color: #ffffff;
+    }
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+      color: #ff6600;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #ff6600;
+    }
+
+    /* Puedes agregar más estilos para la temática de videojuegos según tus preferencias */
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">DIX GAMER MEJOR</a>
+      <div class="mx-auto">
+        <form class="d-flex" method="GET">
+          <div class="input-group">
+            <input class="form-control me-2" type="text" placeholder="Buscar juegos en alta definición..." name="q" />
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </div>
+        </form>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          {{#if session.session.loggedIn}}
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+          {{/if}}
+          <li class="nav-item">
+            <a class="nav-link" href="/realtimeproducts">Real Time Juegos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/chat">Chat</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
+  <div class="container my-5 main-content">
     {{{body}}}
-
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-4">
-                <h3>Rocket League</h3>
-                <img src="https://i.scdn.co/image/ab67706c0000da84e204b6240dd475113fa235e0" alt="">
-                <p>¡Experimenta la acción de fútbol de alta octanaje con Rocket League!</p>
-            </div>
-            <div class="col-md-4">
-                <h3>Genshin Impact</h3>
-                <img src="https://lutear.com/wp-content/uploads/2020/09/genshin-impat-logo.jpg" alt="">
-                <p>Embárcate en un viaje a través del mundo fantástico de Teyvat en Genshin Impact.</p>
-            </div>
-            <div class="col-md-4">
-                <h3>Fortnite</h3>
-                <img src="https://assets-prd.ignimgs.com/2023/06/09/fortnitewilds-1686353306240.jpg?width=300&crop=1%3A1%2Csmart" alt="">
-                <p>Únete al fenómeno battle royale y construye, lucha y sobrevive en Fortnite.</p>
-            </div>
-        </div>
+  </div>
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 DIX GAMER MEJOR. Todos los derechos reservados.</p>
     </div>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col text-center">
-                <p>Tienda de Videojuegos Dix - Desarrollado por <b>Julio Sanchez</b></p>
-            </div>
-        </div>
-    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+</body>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-  </body>
 </html>
