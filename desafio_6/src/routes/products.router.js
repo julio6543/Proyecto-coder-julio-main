@@ -1,53 +1,238 @@
-import { Router } from "express";
-import CartManager from "../dao/CartManager.js";
+    import { Router } from "express";
+    import ProductManager from "../dao/ProductManager.js";  
 
-const cartsRouter = Router();
-const cartManager = new CartManager();
+    const productsRouter = Router();
+    const PM = new ProductManager();
 
-cartsRouter.post("/", async (req, res) => {
-    try {
-        const newCartCreated = await cartManager.createCart();
+    productsRouter.get("/", async (req, res) => {
+    const products = await PM.getProducts(req.query);
 
-        if (newCartCreated) {
-            res.send({ status: "success", message: "The cart was created successfully!" });
-        } else {
-            res.status(500).send({ status: "error", message: "Error! Could not create the cart!" });
-        }
-    } catch (error) {
-        res.status(500).send({ status: "error", message: "An error occurred while creating the cart." });
+    res.send({ products });
+    });
+
+    productsRouter.get("/:pid", async (req, res) => {
+    let pid = req.params.pid;
+    const products = await PM.getProductById(pid);
+
+    res.send({ products });
+    });
+
+    productsRouter.post("/", async (req, res) => {
+    let { title, description, code, price, status, stock, category, thumbnail } =
+        req.body;
+
+    if (!title) {
+        res
+        .status(400)
+        .send({ status: "error", message: "Error! No se cargó el campo Title!" });
+        return false;
     }
-});
 
-cartsRouter.get("/:cartId", async (req, res) => {
-    const cartId = req.params.cartId;
-    try {
-        const cart = await cartManager.getCart(cartId);
-
-        if (cart) {
-            res.send({ products: cart.products });
-        } else {
-            res.status(400).send({ status: "error", message: "Error! Cart ID not found!" });
-        }
-    } catch (error) {
-        res.status(500).send({ status: "error", message: "An error occurred while fetching the cart." });
+    if (!description) {
+        res
+        .status(400)
+        .send({
+            status: "error",
+            message: "Error! No se cargó el campo Description!",
+        });
+        return false;
     }
-});
 
-cartsRouter.post("/:cartId/products/:productId", async (req, res) => {
-    const cartId = req.params.cartId;
-    const productId = req.params.productId;
-    
-    try {
-        const productAdded = await cartManager.addProductToCart(cartId, productId);
-
-        if (productAdded) {
-            res.send({ status: "success", message: "The product was added to the cart successfully!" });
-        } else {
-            res.status(400).send({ status: "error", message: "Error! Could not add the product to the cart!" });
-        }
-    } catch (error) {
-        res.status(500).send({ status: "error", message: "An error occurred while adding the product to the cart." });
+    if (!code) {
+        res
+        .status(400)
+        .send({ status: "error", message: "Error! No se cargó el campo Code!" });
+        return false;
     }
-});
 
-export default cartsRouter;
+    if (!price) {
+        res
+        .status(400)
+        .send({ status: "error", message: "Error! No se cargó el campo Price!" });
+        return false;
+    }
+
+    status = !status && true;
+
+    if (!stock) {
+        res
+        .status(400)
+        .send({ status: "error", message: "Error! No se cargó el campo Stock!" });
+        return false;
+    }
+
+    if (!category) {
+        res
+        .status(400)
+        .send({
+            status: "error",
+            message: "Error! No se cargó el campo Category!",
+        });
+        return false;
+    }
+
+    if (!thumbnail) {
+        res
+        .status(400)
+        .send({
+            status: "error",
+            message: "Error! No se cargó el campo thumbnail!",
+        });
+        return false;
+    } else if (!Array.isArray(thumbnail) || thumbnail.length == 0) {
+        res
+        .status(400)
+        .send({
+            status: "error",
+            message:
+            "Error! Debe ingresar al menos una imagen en el Array thumbnail!",
+        });
+        return false;
+    }
+
+    const result = await PM.addProduct({
+        title,
+        description,
+        code,
+        price,
+        status,
+        stock,
+        category,
+        thumbnail,
+    });
+
+    if (result) {
+        res.send({ status: "ok", message: "El Producto se agregó correctamente!" });
+    } else {
+        res
+        .status(500)
+        .send({
+            status: "error",
+            message: "Error! No se pudo agregar el Producto!",
+        });
+    }
+    });
+
+    productsRouter.put("/:pid", async (req, res) => {
+    let pid = req.params.pid;
+    let { title, description, code, price, status, stock, category, thumbnail } =
+        req.body;
+
+    if (!title) {
+        res
+        .status(400)
+        .send({ status: "error", message: "Error! No se cargó el campo Title!" });
+        return false;
+    }
+
+    if (!description) {
+        res
+        .status(400)
+        .send({
+            status: "error",
+            message: "Error! No se cargó el campo Description!",
+        });
+        return false;
+    }
+
+    if (!code) {
+        res
+        .status(400)
+        .send({ status: "error", message: "Error! No se cargó el campo Code!" });
+        return false;
+    }
+
+    if (!price) {
+        res
+        .status(400)
+        .send({ status: "error", message: "Error! No se cargó el campo Price!" });
+        return false;
+    }
+
+    status = !status && true;
+
+    if (!stock) {
+        res
+        .status(400)
+        .send({ status: "error", message: "Error! No se cargó el campo Stock!" });
+        return false;
+    }
+
+    if (!category) {
+        res
+        .status(400)
+        .send({
+            status: "error",
+            message: "Error! No se cargó el campo Category!",
+        });
+        return false;
+    }
+
+    if (!thumbnail) {
+        res
+        .status(400)
+        .send({
+            status: "error",
+            message: "Error! No se cargó el campo thumbnail!",
+        });
+        return false;
+    } else if (!Array.isArray(thumbnail) || thumbnail.length == 0) {
+        res
+        .status(400)
+        .send({
+            status: "error",
+            message:
+            "Error! Debe ingresar al menos una imagen en el Array thumbnail!",
+        });
+        return false;
+    }
+
+    const result = await PM.updateProduct(pid, {
+        title,
+        description,
+        code,
+        price,
+        status,
+        stock,
+        category,
+        thumbnail,
+    });
+
+    if (result) {
+        res.send({
+        status: "ok",
+        message: "El Producto se actualizó correctamente!",
+        });
+    } else {
+        res
+        .status(500)
+        .send({
+            status: "error",
+            message: "Error! No se pudo actualizar el Producto!",
+        });
+    }
+    });
+
+    productsRouter.delete("/:pid", async (req, res) => {
+    let pid = req.params.pid;
+    const result = await PM.deleteProduct(pid);
+
+    if (result) {
+        res.send({
+        status: "ok",
+        message: "El Producto se eliminó correctamente!",
+        });
+    } else {
+        res
+        .status(500)
+        .send({
+            status: "error",
+            message: "Error! No se pudo eliminar el Producto!",
+        });
+    }
+    });
+
+    export default productsRouter;
+
+
+

@@ -1,28 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.querySelector("#loginForm");
-
-    loginForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const email = document.querySelector("#email").value;
-        const password = document.querySelector("#password").value;
-
-        try {
-            const response = await fetch("/api/sessions/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, password })
-            });
-
-            if (response.ok) {
-                location.href = "/products";
-            } else {
-                console.error("Inicio de sesión fallido");
-            }
-        } catch (error) {
-            console.error("Error al procesar la solicitud:", error);
+    const loginUser = async () => {
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+    
+        const response = await fetch(/api/sessions/login, {
+        method: "POST",
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify({ email: email, pass: password }),
+        });
+        const data = await response.json();
+        console.log(data);
+    
+        if (data.status === "ok") {
+        location.href = "/products";
         }
-    });
-});
+    };
+    
+    document.getElementById("btnLogIn").onclick = loginUser;
