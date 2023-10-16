@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 app.use(session({
     store:MongoStore.create({
-        mongoUrl: "mongodb+srv://juliogonzalosanchez21:d7wJqHR9DdrELCa9@cluster0.u63xyb3.mongodb.net/?retryWrites=true&w=majority",
+        mongoUrl: "mongodb+srv://juliogonzalosanchez21:Tengohambre@cluster0.u63xyb3.mongodb.net/?retryWrites=true&w=majority",
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
         ttl: 10000
     }),
@@ -56,7 +56,7 @@ app.use("/api/carts/", cartsRouter);
 app.use("/api/sessions/", sessionsRouter);
 app.use("/", viewsRouter);
 
-mongoose.connect("mongodb+srv://juliogonzalosanchez21:d7wJqHR9DdrELCa9@cluster0.u63xyb3.mongodb.net/?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://juliogonzalosanchez21:Tengohambre@cluster0.u63xyb3.mongodb.net/?retryWrites=true&w=majority");
 
     socketServer.on("connection",async(socket)=>{
         console.log("client connected con ID:",socket.id)
