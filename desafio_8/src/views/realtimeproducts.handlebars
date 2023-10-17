@@ -1,0 +1,36 @@
+    <form id="formProduct" class="container mt-4">
+    <h2 class="mb-4">Agregar Producto</h2>
+    <div class="mb-3">
+        <input class="form-control" type="text" name="title" id="title" placeholder="Ingrese Nombre del Producto" required>
+    </div>
+    <div class="mb-3">
+        <input class="form-control" type="text" name="description" id="description" placeholder="Ingrese descripción" required>
+    </div>
+    <div class="mb-3">
+        <input class="form-control" type="number" name="stock" id="stock" placeholder="Ingrese su stock" required>
+    </div>
+    <div class="mb-3">
+        <input class="form-control" type="text" name="thumbnail" id="thumbnail" placeholder="Ingrese su imagen URL" required>
+    </div>
+    <div class="mb-3">
+        <input class="form-control" type="text" name="category" id="category" placeholder="Ingrese categoría" required>
+    </div>
+    <div class="mb-3">
+        <input class="form-control" type="number" name="price" id="price" placeholder="Ingrese su precio" required>
+    </div>
+    <div class="mb-3">
+        <input class="form-control" type="text" name="code" id="code" placeholder="Ingrese su código" required>
+    </div>
+    <button class="btn btn-primary" type="submit" id="add-btn">Registrar</button>
+    <div class="mb-3">
+        <input type="text" id="delete-id" name="delete-id" class="form-control" placeholder="Ingrese el ID">
+    </div>
+    <button class="btn btn-danger" type="button" id="delete-btn">Eliminar</button>
+    </form>
+
+    <article id="list-products" class="container mt-4">
+
+    </article>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/main.realTimeProducts.js"></script>
